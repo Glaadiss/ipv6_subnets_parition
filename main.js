@@ -125,7 +125,11 @@ function fillSubnet(subnet) {
   }
 }
 
-loadData("input2.txt", (lines) => {
+if (!process.argv[2]) {
+  throw Error("provide input file as first argument!");
+}
+
+loadData(process.argv[2], (lines) => {
   const rows = prepareData(lines);
   validateData(rows);
   const sortedRows = sortByIp(rows);

@@ -1,0 +1,14 @@
+{
+  "name": "ipv6_subnets_parition",
+  "version": "1.0.0",
+  "main": "main.js",
+  "repository": "git@github.com:Glaadiss/ipv6_subnets_parition.git",
+  "author": "Bartlomiej Gladys <bartekgladys@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "ip6addr": "^0.2.3"
+  }
+}
