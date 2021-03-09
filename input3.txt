@@ -1,0 +1,2 @@
+212.106.160.0/20 Przydzial nr 2
+212.106.160.0/21 Oddzial zdalny
