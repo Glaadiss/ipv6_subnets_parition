@@ -25,9 +25,10 @@ function prepareData(lines) {
 
 // przydział dla "Oddział 2" ma nieprawidłowy adres sieci. Takie błędy najlepiej jak by były naprawiane. Kolejny przykład błędu, to możliwe powtórzenia przydziałów, co powinno być sygnalizowane.
 function validateData(rows) {
-  rows.forEach(({ ipMask, key }, i) => {
+  rows.forEach((row, i) => {
     try {
-      ip6addr.createCIDR(ipMask);
+      const correctedIpMask = ip6addr.createCIDR(row.ipMask).toString();
+      row.ipMask = correctedIpMask;
     } catch (error) {
       throw Error(`IP ${ipMask} is incorrect in line ${i}`);
     }
@@ -97,6 +98,8 @@ function fillSubnet(subnet) {
     fillSubnet(child);
   });
 
+  subnet.children = sortByIp(subnet.children);
+
   const sub1 = ip6addr.parse(ip);
   const cidr1 = ip6addr.createCIDR(`${sub1.toString()}/${directSubMask}`);
   const cidr2 = ip6addr.createCIDR(
@@ -114,13 +117,13 @@ function fillSubnet(subnet) {
   if (shouldAddSub1) {
     subnet.children.unshift({
       ipMask: cidr1.toString(),
-      key: FREE_SUBNET_KEY + "_ADDED",
+      key: FREE_SUBNET_KEY,
     });
   }
   if (shouldAddSub2) {
     subnet.children.push({
       ipMask: cidr2.toString(),
-      key: FREE_SUBNET_KEY + "_ADDED",
+      key: FREE_SUBNET_KEY,
     });
   }
 }
