@@ -2,6 +2,7 @@
   "name": "ipv6_subnets_parition",
   "version": "1.0.0",
   "main": "main.js",
+  "bin": "main.js",
   "repository": "git@github.com:Glaadiss/ipv6_subnets_parition.git",
   "author": "Bartlomiej Gladys <bartekgladys@gmail.com>",
   "license": "MIT",

@@ -23,27 +23,33 @@ function prepareData(lines) {
     .map(([ipMask, key]) => ({ ipMask, key }));
 }
 
-// przydział dla "Oddział 2" ma nieprawidłowy adres sieci. Takie błędy najlepiej jak by były naprawiane. Kolejny przykład błędu, to możliwe powtórzenia przydziałów, co powinno być sygnalizowane.
 function validateData(rows) {
   rows.forEach((row, i) => {
     try {
       const correctedIpMask = ip6addr.createCIDR(row.ipMask).toString();
-      row.ipMask = correctedIpMask;
+      if (correctedIpMask !== row.ipMask) {
+        console.log(
+          `CIDR modified from ${row.ipMask} to ${correctedIpMask} in line ${
+            i + 1
+          }`
+        );
+        row.ipMask = correctedIpMask;
+      }
     } catch (error) {
-      throw Error(`IP ${ipMask} is incorrect in line ${i}`);
+      throw Error(`IP ${ipMask} is incorrect in line ${i + 1}`);
     }
   });
 
   rows.reduce((acc, { key }, i) => {
     if (acc.includes(key) && key != FREE_SUBNET_KEY) {
-      throw Error(`Not unique key in line ${i}`);
+      throw Error(`Not unique key in line ${i + 1}`);
     }
     return [...acc, key];
   }, []);
 
   rows.reduce((acc, { ipMask }, i) => {
     if (acc.includes(ipMask) && ipMask) {
-      throw Error(`Not unique ip/mask in line ${i}`);
+      throw Error(`Not unique ip/mask in line ${i + 1}`);
     }
     return [...acc, ipMask];
   }, []);
@@ -76,16 +82,15 @@ function assignHierarchy(rows) {
   return sortByIp(structuredItems);
 }
 
-function printRows(rows, space = 0) {
+function printRows(rows, stream, space = 0) {
   rows.forEach((row) => {
-    console.log(`${"*".repeat(space * 4)}${row.ipMask} ${row.key}`);
+    stream.write(`${"*".repeat(space * 4)}${row.ipMask} ${row.key}\r\n`);
     if (row.children) {
-      printRows(row.children, space + 1);
+      printRows(row.children, stream, space + 1);
     }
   });
 }
 
-// brakujące podsieci do wypełnienia podsieci nadrzędnej (tylko w przypadku, gdy istnieje jakaś podsieć zawierająca się w nadrzędnej)
 function fillSubnet(subnet) {
   if (!subnet.children) {
     return;
@@ -132,11 +137,21 @@ if (!process.argv[2]) {
   throw Error("provide input file as first argument!");
 }
 
+if (!process.argv[3]) {
+  throw Error("provide output file as second argument!");
+}
+
 loadData(process.argv[2], (lines) => {
   const rows = prepareData(lines);
   validateData(rows);
   const sortedRows = sortByIp(rows);
   const structuredRows = assignHierarchy(sortedRows);
   structuredRows.forEach(fillSubnet);
-  printRows(structuredRows);
+
+  const stream = fs.createWriteStream(process.argv[3]);
+  stream.once("open", () => {
+    printRows(structuredRows, stream);
+    stream.end();
+    console.log(`Result saved in ${process.argv[3]}`);
+  });
 });
