@@ -40,16 +40,17 @@ function validateData(rows) {
     }
   });
 
-  rows.reduce((acc, { key }, i) => {
-    if (acc.includes(key) && key != FREE_SUBNET_KEY) {
-      throw Error(`Not unique key in line ${i + 1}`);
-    }
-    return [...acc, key];
-  }, []);
+  // rows.reduce((acc, { key }, i) => {
+  //   if (acc.includes(key) && key != FREE_SUBNET_KEY) {
+  //     throw Error(`Not unique allocation name in line ${i + 1}: ${key}`);
+  //   }
+  //   return [...acc, key];
+  // }, []);
 
-  rows.reduce((acc, { ipMask }, i) => {
+  rows.reduce((acc, { ipMask, key }, i) => {
     if (acc.includes(ipMask) && ipMask) {
-      throw Error(`Not unique ip/mask in line ${i + 1}`);
+      console.log(`Skipping not unique ip/mask in line ${i + 1}: ${ipMask}`);
+      return acc;
     }
     return [...acc, ipMask];
   }, []);

@@ -1,0 +1,8 @@
+2ff1:1d8:2:280:f102:23:ff:f000/117 przydzial2
+2ff1:1d8:2:280:f102:23:ff:f800/117 przydzial3
+****2ff1:1d8:2:280:f102:23:ff:f800/118 WOLNA
+****2ff1:1d8:2:280:f102:23:ff:fc00/119 podsiec2
+****2ff1:1d8:2:280:f102:23:ff:fe00/119 podsiec1
+********2ff1:1d8:2:280:f102:23:ff:fe00/120 WOLNA
+********2ff1:1d8:2:280:f102:23:ff:ff00/120 podsiec11
+2ff1:1d8:2:280:f102:23:ff:f800/117 przydzial1

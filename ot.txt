@@ -1,0 +1,12 @@
+157.158.0.0/16 Przydzial nr 1
+****157.158.1.0/24 Podsiec dla klienta X
+****157.158.2.0/24 Podsiec dla klienta Y
+****157.158.128.0/17 Przydzialy dla oddzialow
+********157.158.128.0/24 WOLNA
+********157.158.129.0/24 Oddzial 1
+********157.158.130.0/24 WOLNA
+********157.158.131.0/24 Oddzial 2
+********157.158.192.0/18 WOLNA
+212.106.160.0/20 Przydzial nr 2
+****212.106.160.0/21 Oddzial zdalny
+****212.106.168.0/21 WOLNA
