@@ -1,7 +1,7 @@
 ## Inżynieria Internetu [SSM]
 
 # Narzędzie do organizacji podziałów podsieci IPv6
-Prowadzący: dr inż. Marek Barczyk
+Prowadzący: mgr inż. Marek Barczyk
 ### Skład sekcji:
 - Bartłomiej Gładys
 - Marek Żabiałowicz
