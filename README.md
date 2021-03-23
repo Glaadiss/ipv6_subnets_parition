@@ -23,3 +23,10 @@ yarn
 node main.js test_files/input.txt out.txt
 ```
 
+
+### Wnioski:
+- Biblioteka `ip6addr` może zostać użyta do organizacja podziałów zarówno dla ipv4 jak i ipv6
+- Tworząc maskę na podstawie prefixu można stwierdzić czy IP znajduje się w danej podsieci
+- W ipv6 poszczególne bloki są odseparowane poprzez znak `:`, możemy również zdefiniować początkowe bloki oraz końcowe a między nimi wstawić podwójny znak `::`, oznacza to, że bloki po środku mają wartosć 0
+- Można mapować adresy ipv4 na ipv6 poprzez używanie jedynie 32 młodszych bitów
+- Wypełnianie podsieci można wykonać poprzez tworzenie dwóch wewnętrznych CIDR i sprawdzenie czy jakikolwiek IP znajduje się w tych CIDR, jeżeli nie, to możemy przyjąć, że taka alokacja jest "WOLNA" i możemy to udokumentować w pliku wyjściowym.
